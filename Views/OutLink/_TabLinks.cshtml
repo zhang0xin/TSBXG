@@ -1,0 +1,17 @@
+﻿@model IEnumerable<TSBXG.Models.OutLink>
+<ul class="list-link">
+    @{
+        int i = 0;
+        foreach (var link in Model)
+        { 
+        <li><a href="@link.Url">»&nbsp;&nbsp;@link.Text</a></li>
+            i++;
+            if (i >= 6) { break; }
+        }
+        for (; i < 6; i++)
+        {
+        <li><a>&nbsp;</a></li>
+        }
+        <li><a class="more" href="/OutLink/ViewLinkList?category=waibulianjie">查看更多&nbsp;&nbsp;»</a></li>
+    }
+</ul>

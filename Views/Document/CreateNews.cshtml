@@ -1,0 +1,78 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateNews", "Document", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return checkform()" }))
+{
+    @Html.ValidationSummary(true)
+                                  
+    <div class="panel panel-default">
+        <div class="panel-heading">创建</div>
+
+        <div class="panel-body">
+            @Html.Hidden("Category", Request["category"])
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                <label for="ImageFile">上传图片</label>
+                <input id="ImageFile" type="file" name="ImageFile" class="form-control" />
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Html)
+                @Html.HiddenFor(model => model.Html)
+                <div id="summernote" class="form-control"></div>
+                @Html.ValidationMessageFor(model => model.Html)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Tag)
+                @{
+    var tagItems = new List<SelectListItem>();
+    tagItems.Add(new SelectListItem());
+    tagItems.Add(new SelectListItem());
+
+    tagItems[0].Text = "不在主页显示";
+    tagItems[0].Value = "";
+
+    tagItems[1].Text = "在主页显示";
+    tagItems[1].Value = "ShowImage";
+                }
+                @Html.DropDownListFor(model => model.Tag, tagItems, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="创建" class="btn btn-primary" />
+            @Html.ActionLink("返回", "ListNews", new { category = Request["category"] }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    function HTMLEncode(html) {
+        var temp = document.createElement("div");
+        (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+        var output = temp.innerHTML;
+        temp = null;
+        return output;
+    }
+    function checkform() {
+        $('input[name=Html]').val(HTMLEncode($('#summernote').summernote('code')));
+        return true;
+    }
+    $(document).ready(function () {
+        $('#summernote').summernote({ lang: 'zh-CN' });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

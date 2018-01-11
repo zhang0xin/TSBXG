@@ -1,0 +1,39 @@
+﻿<div class="row">
+    @{
+        string carouselId = "carousel" + @DateTime.Now.Ticks;
+    }
+    <div data-ride="carousel" class="carousel slide" id="@carouselId">
+        <!-- 图片容器 -->
+        <div class="carousel-inner">
+            @{
+                string cssClass = "";
+                int rowItemCount = 4;
+                int carouselCount = (int)Math.Ceiling(Model.Length / (float)rowItemCount);
+                for (int i = 0; i < carouselCount; i++)
+                {
+                    cssClass = string.IsNullOrWhiteSpace(cssClass) ? "item active" : "item";
+                    <div class="@cssClass">
+                    @for (int j = 0; j < rowItemCount; j++)
+                    {
+                        int k = i * rowItemCount + j;
+                        if (k >= Model.Length) { break; }
+                        var item = Model[k];
+                        
+                        <div class="col-md-3">
+                            <div class="thumbnail">
+                                <a href="~/Document/ViewNewsContent/@item.Id?category=chanpinzhanshi">
+                                    <img alt="@item.Title" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                                    <div class="caption">
+                                        @item.Title
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

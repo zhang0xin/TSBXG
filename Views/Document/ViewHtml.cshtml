@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "ViewNews";
+    Layout = "~/Views/Shared/_HomeContentLayout.cshtml";
+}
+
+<div class="html-content">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Html))
+</div>

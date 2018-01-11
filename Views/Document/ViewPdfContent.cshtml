@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "ViewNews";
+    Layout = "~/Views/Shared/_HomeContentLayout.cshtml";
+}
+<div id="pdf-container" class="pdf-viewer">请先安装PDF阅读器</div> 
+
+<script>
+    PDFObject.embed("@Url.Action("FileById", "Document", new { Model.Id, category=Model.Category, page=Request["page"] })", "#pdf-container");
+</script>
+

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TSBXG.Models.OutLink>
+@{
+    ViewBag.Title = "ViewLinkList";
+    Layout = "~/Views/Shared/_HomeContentLayout.cshtml";
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>常用链接</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var link in Model)
+        {
+            <tr>
+                <td><a href="@link.Url">@link.Text</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

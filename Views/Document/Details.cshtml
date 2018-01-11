@@ -1,0 +1,37 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Document</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Image)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Image)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Html)
+    </div>
+    <div class="display-field">
+        @Html.Raw(HttpUtility.HtmlDecode(Model.Html))
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

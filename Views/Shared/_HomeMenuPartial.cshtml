@@ -1,0 +1,29 @@
+﻿@helper RenderMenu(TSBXG.Models.TreeNode<TSBXG.Models.Sitemap> root)
+{
+    <nav id="menu-wrap"><ul id="menu">
+        @RenderItem(root, false)
+        @for (int i = 0; i < root.Children.Count(); i++)
+        {
+            @RenderItem(root.Children[i], true)
+        }
+    </ul></nav>
+}
+@helper RenderItem(TSBXG.Models.TreeNode<TSBXG.Models.Sitemap> node, bool renderChildren)
+{
+    bool hasChildren = renderChildren && node.Children.Count() > 0;
+    var caret = "";// "<b class='caret'></b>";
+    MvcHtmlString caretHtml = MvcHtmlString.Create(hasChildren ? caret : "");
+    
+    <li><a href="@node.Value.ViewUrl">@node.Value.Text@caretHtml</a>
+        @if (hasChildren)
+        {
+            <ul>
+                @for (int i = 0; i < node.Children.Count(); i++)
+                {
+                    @RenderItem(node.Children[i], renderChildren)
+                }
+            </ul>
+        }
+    </li>
+}
+@RenderMenu(Model)

@@ -1,0 +1,44 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateFile", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+                                  
+    <div class="panel panel-default">
+        <div class="panel-heading">创建</div>
+
+        <div class="panel-body">
+            @Html.Hidden("category", Request["category"])
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                <label for="AttachFile">上传文件（小于30M）</label>
+                <input type="file" name="File" class = "form-control"/>
+            </div>
+
+            <div class="editor-label">
+                <label for="AttachFileUrl">文件地址（大于30M的文件，手动拷贝到服务器然后填写地址）</label>
+                @Html.TextBoxFor(model => model.AttachFileUrl, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AttachFileUrl)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="创建" class="btn btn-primary" />
+            @Html.ActionLink("返回", "ListFile", new { category = Request["category"] }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

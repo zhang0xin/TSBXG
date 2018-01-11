@@ -1,0 +1,17 @@
+﻿@model IEnumerable<TSBXG.Models.OutLink>
+<ul class="flow-link">
+    @{
+        int i = 0;
+        foreach (var link in Model)
+        { 
+        <li class="col-md-2"><a href="@link.Url">»&nbsp;&nbsp;@link.Text</a></li>
+            i++;
+            if (i == 11) { break; }
+        }
+        for (; i < 11; i++)
+        {
+        <li class="col-md-2"><a>&nbsp;</a></li>
+        }
+        <li class="col-md-2"><a class="more" href="/OutLink/ViewLinkList">»&nbsp;&nbsp;查看更多</a></li>
+    }
+</ul>

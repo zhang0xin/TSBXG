@@ -1,0 +1,46 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditHtml", "Document", FormMethod.Post, new { onsubmit = "return checkform()" }))
+{
+    @Html.ValidationSummary(true)
+                                      
+    <div class="panel panel-default">
+        <div class="panel-heading">编辑HTML内容</div>
+
+        <div>
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Html)
+            <div id="summernote">@Html.Raw(HttpUtility.HtmlDecode(Model.Html))</div>
+            @Html.ValidationMessageFor(model => model.Html)
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="保存" class="btn btn-primary" />
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    function HTMLEncode(html) {
+        var temp = document.createElement("div");
+        (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+        var output = temp.innerHTML;
+        temp = null;
+        return output;
+    }
+    function checkform() {
+        $('input[name=Html]').val(HTMLEncode($('#summernote').summernote('code')));
+        return true;
+    }
+    $(document).ready(function () {
+        $('#summernote').summernote({ lang: 'zh-CN' });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

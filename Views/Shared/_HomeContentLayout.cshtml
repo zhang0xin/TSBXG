@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="set">
+            <h3><a href="#">图片新闻</a></h3>
+            @{Html.RenderAction("_CarouselPartial", "Home", new { category = "tupianxinwen" });}
+        </div>
+        <div class="set-seprator"></div>
+        @{Html.RenderAction("_TabNewsPartial", "Home", new { category = "gonggaolan", withTime = false });}
+        <div class="set-seprator"></div>
+        <div class="set">
+            <h3><a href="#">常用链接</a></h3>
+
+            @{Html.RenderAction("_TabLinks", "OutLink");}
+        </div>
+    </div>
+    <div class="col-md-9">
+        @{Html.RenderAction("_BreadcrumbPartial", "Home");}
+        @RenderBody()
+    </div>
+</div>

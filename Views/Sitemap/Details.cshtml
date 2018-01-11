@@ -1,0 +1,51 @@
+﻿@model TSBXG.Models.Sitemap
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Sitemap</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Text)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Text)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ManageUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ManageUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ViewUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ViewUrl)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DisplayIndex)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DisplayIndex)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ParentId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ParentId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TSBXG.Models.Sitemap>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">站点地图</div>
+    <div class="panel-body">
+        @Html.ActionLink("创建站点地图", "Create", null, new { @class = "btn btn-default" })
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentId)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManageUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ViewUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayIndex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParentId)
+                </td>
+                <td style="width: 125px;">
+                    <div class="btn-group">
+                        @Html.ActionLink("编辑", "Edit", new { id = item.Id }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("删除", "Delete", new { id = item.Id }, new { @class = "btn btn-default" })
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,135 @@
+﻿@using TSBXG.Models;
+@model ICollection<TabContent>
+<ul class="nav nav-tabs">
+    @{
+        var active = MvcHtmlString.Create("class='active'");
+        foreach (var tab in Model)
+        {
+        <li @active><a href="#tab-@tab.Category" data-toggle="tab">@tab.Text</a></li>
+            active = null;
+        }
+    }
+</ul>
+@{
+    <div class="tab-content fixed-content-height">
+        @foreach (var tab in Model)
+        {
+            var activeClass = "active";
+            if (tab.Type == "News")
+            {
+            <ul id="tab-@tab.Category" class="list-link tab-pane fade in fixed-content-height @activeClass">
+                @for (int i = 0; i < 6; i++)
+                {
+                    string link = "", text = "", datetime = "";
+                    var docs = tab.Content;
+                    if (i < docs.Count())
+                    {
+                        if (docs[i].UpdateTime.HasValue)
+                        {
+                            if (tab.ItemWithDate) { datetime += docs[i].UpdateTime.Value.ToShortDateString(); }
+                            if (tab.ItemWithTime) { datetime += " " + docs[i].UpdateTime.Value.ToLongTimeString(); }
+                        }
+                        link = string.Format(
+                            "/Document/ViewNewsContent/{0}?category={1}", @docs[i].Id, @docs[i].Category);
+                        text = docs[i].Title;
+                    }
+
+
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                    <li><a href="@link">»&nbsp;&nbsp;@text<span>@datetime</span></a></li>
+                    }
+                    else
+                    {
+                    <li><a>&nbsp;</a></li>
+                    }
+
+                }
+                <li><a class="more" href="/Document/ViewNewsList?category=@tab.Category">查看更多&nbsp;&nbsp;»</a></li>
+            </ul>
+            }
+            else if (tab.Type == "File")
+            {
+            <ul id="tab-@tab.Category" class="list-link tab-pane fade in fixed-content-height @activeClass">
+                @for (int i = 0; i < 6; i++)
+                {
+                    string link = "", text = "";
+                    var docs = tab.Content;
+                    if (i < docs.Count())
+                    {
+                        link = string.Format(
+                            "/Document/ViewNewsContent/{0}?category={1}", @docs[i].Id, @docs[i].Category);
+                        text = docs[i].Title;
+                    }
+
+
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                    <li>
+                        @if (!string.IsNullOrWhiteSpace(docs[i].AttachFileType))
+                        {
+                            <a href="@Url.Action("FileById", "Document", new { docs[i].Id })">»&nbsp;&nbsp;@docs[i].Title<span>下载文件</span></a>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(docs[i].AttachFileUrl))
+                        {
+                            <a href="@docs[i].AttachFileUrl">»&nbsp;&nbsp;@docs[i].Title<span>下载文件</span></a>
+
+                        }
+                    </li>
+                    }
+                    else
+                    {
+                    <li><a>&nbsp;</a></li>
+                    }
+                }
+                <li><a class="more" href="/Document/ViewFileList?category=@tab.Category">查看更多&nbsp;&nbsp;»</a></li>
+            </ul>
+            }
+            else if (tab.Type == "Image")
+            {
+                string carouselId = "carousel" + @DateTime.Now.Ticks;
+            <div id="tab-@tab.Category" class="list-link tab-pane fade in fixed-content-height @activeClass">
+                <div data-ride="carousel" class="carousel slide" id="@carouselId">
+                    <div class="carousel-inner">
+                        @{ 
+                string cssClass = "";
+                foreach (var item in tab.Content)
+                {
+                    cssClass = string.IsNullOrWhiteSpace(cssClass) ? "item active" : "item";
+                
+                            <div class="@cssClass">
+                                @if (tab.ItemWithLink)
+                                {
+                                    <a href="~/Document/ViewNewsContent/@item.Id?category=@item.Category">
+                                        <img alt="@item.Title" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                                        <span>@item.Title</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <img alt="@item.Title" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                                }
+                            </div>
+                }
+                        }
+                    </div>
+                    <!-- 圆圈指示符 -->
+                    <ol class="carousel-indicators">
+                        @{
+                int idx = 0;
+                string classProp = null;
+                foreach (var item in tab.Content)
+                {
+                    classProp = classProp == null ? "class='active'" : "";
+                            <li data-slide-to="@idx" data-target="#@carouselId" @MvcHtmlString.Create(classProp)></li>
+                    idx++;
+                }  
+                        }
+                    </ol>
+                </div>
+            </div>
+            }
+            activeClass = null;
+        }
+    </div>
+}

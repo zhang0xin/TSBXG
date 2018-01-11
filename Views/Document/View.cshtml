@@ -1,0 +1,8 @@
+﻿@model TSBXG.Models.Document
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<div class="container">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Html))
+</div>

@@ -1,0 +1,6 @@
+﻿<ul class="fixed-content-height">
+    @for (int i = 0; i < Math.Min(10, Model.Length); i++)
+    { 
+        <li><a href="~/Document/ViewNewsContent/@Model[i].Id?category=@Model[i].Category">@Model[i].Title<span>@Model[i].UpdateTime.ToShortDateString()</span></a></li>
+    }
+</ul>

@@ -1,0 +1,47 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditImage", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">编辑</div>
+
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
+            @Html.Hidden("category", Request["category"])
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+                @Html.TextBoxFor(model => model.Title,  new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                <label for="ImageFile">上传图片</label>
+                @if (Model.ImageData != null)
+                {
+                    <img class="edit-thumb-image" src="@Url.Action("ImageById", "Document", new { Model.Id })" />
+                }
+                <input id="ImageFile" type="file" name="ImageFile"  class = "form-control" />
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="btn-group">
+                <input name="saveImage" type="submit" value="保存" class="btn btn-primary" />
+                <input name="clearImage" type="submit" value="清除" class="btn btn-default" />
+            </div>
+            @Html.ActionLink("返回", "ListImage", new { category = Request["category"] }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

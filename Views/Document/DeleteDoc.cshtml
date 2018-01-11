@@ -1,0 +1,37 @@
+﻿@model TSBXG.Models.Document
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">删除文档</div>
+
+    <table class="table table-hover">
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.Title)
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.Html)
+            </td>
+            <td class="display-field">
+                @Html.Raw(HttpUtility.HtmlDecode(Model.Html))
+            </td>
+        </tr>
+    </table> 
+    
+    <div class="panel-footer">
+        @using (Html.BeginForm())
+        {
+            <input type="submit" value="确认" class="btn btn-primary" />
+            @Html.ActionLink("返回", "ListDoc", new { category = Request["category"] }, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model PagedList.IPagedList<TSBXG.Models.Document>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ViewNews";
+    Layout = "~/Views/Shared/_HomeContentLayout.cshtml";
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>文件</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Math.Min(20, Model.Count()); i++)
+        { 
+            <tr>
+                <td>@Model[i].Title</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="@Url.Action("DownloadFile", "Document", 
+                        new { Model[i].Id, category=Model[i].Category, page=Request["page"] })">
+                        <span class="glyphicon glyphicon-file"></span>下载文件
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Request["requireLogon"] == "True")
+{
+    Html.RenderAction("_PopLogonPartial", "Document");
+}
+@Html.PagedListPager(Model, page => Url.Action("ViewFileList", new { page, category = Request["category"] }))

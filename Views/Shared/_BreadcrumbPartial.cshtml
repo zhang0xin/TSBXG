@@ -1,0 +1,6 @@
+﻿<ol class="breadcrumb">
+    @foreach (TSBXG.Models.Sitemap sitemap in Model)
+    {
+        <li><a href="@sitemap.ViewUrl">@sitemap.Text</a></li>
+    }
+</ol>

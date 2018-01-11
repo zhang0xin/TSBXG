@@ -1,0 +1,60 @@
+﻿@model TSBXG.Models.OutLink
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">删除外部链接</div>
+
+    <table class="table table-hover">
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.Text)
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.Text)
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.Url)
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.Url)
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.IconMimeType)
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.IconMimeType)
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="display-label">
+                @Html.DisplayNameFor(model => model.DispalyIndex)
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.DispalyIndex)
+            </td>
+        </tr>
+    </table> 
+
+    <div class="panel-footer">
+        @using (Html.BeginForm())
+        {
+            <input type="submit" value="确认" class="btn btn-primary" />
+            @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

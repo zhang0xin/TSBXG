@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>河钢唐钢不锈钢公司后台管理</title>
+    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content/summernote")
+    @Styles.Render("~/Content/bootstrap")
+
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/bootstrap")
+    @Scripts.Render("~/Scripts/summernote")
+</head>
+<body id="bxg-manage">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="~/">主页</a>
+                        <div>
+                            登录用户: @{
+                                var currUser = (TSBXG.Models.User)Session["CurrentUser"];
+                                <span>@(currUser==null?"":currUser.UserName)</span>
+                                <a href="~/User/Logout">退出</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Partial("_ManageMenuPartial")
+            </div>
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

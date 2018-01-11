@@ -1,0 +1,49 @@
+﻿@{
+    string carouselId = "carousel" + @DateTime.Now.Ticks;
+}
+<div data-ride="carousel" class="carousel slide" id="@carouselId">
+    <!-- 图片容器 -->
+    <div class="carousel-inner">
+        @{ 
+            string cssClass = "";
+            foreach (var item in Model)
+            {
+                cssClass = string.IsNullOrWhiteSpace(cssClass) ? "item active" : "item";
+                
+            <div class="@cssClass">
+                @if (ViewBag.WithLink)
+                {
+                    <a href="~/Document/ViewNewsContent/@item.Id?category=@item.Category">
+                        <img alt="@item.Title" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                        <span>@item.Title</span>
+                    </a>
+                }
+                else
+                {
+                    <img alt="@item.Title" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                }
+            </div>
+            }
+        }
+    </div>
+    <!-- 圆圈指示符 -->
+    <ol class="carousel-indicators">
+        @{
+            int idx = 0;
+            string classProp = null;
+            foreach (var item in Model)
+            {
+                classProp = classProp == null ? "class='active'" : "";
+            <li data-slide-to="@idx" data-target="#@carouselId" @MvcHtmlString.Create(classProp)></li>
+                idx++;
+            }  
+        }
+    </ol>
+    <!-- 左右控制按钮 -->
+    @*<a data-slide="prev" href="#carousel-container" class="left carouselcontrol">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a data-slide="next" href="#carousel-container" class="right carouselcontrol">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>*@
+</div>

@@ -1,0 +1,63 @@
+﻿@model TSBXG.Models.Sitemap
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">创建站点地图</div>
+
+        <div class="panel-body">   
+            <div class="control-group">
+                @Html.LabelFor(model => model.Id)
+                @Html.TextBoxFor(model => model.Id, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Id)
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.Text)
+                @Html.TextBoxFor(model => model.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Text)
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.ManageUrl)
+                @Html.TextBoxFor(model => model.ManageUrl, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ManageUrl)
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.ViewUrl)
+                @Html.TextBoxFor(model => model.ViewUrl, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ViewUrl)
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.DisplayIndex)
+                @Html.TextBoxFor(model => model.DisplayIndex, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DisplayIndex)
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.ParentId)
+                @Html.TextBoxFor(model => model.ParentId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ParentId)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="创建" class="btn btn-primary" />
+            @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

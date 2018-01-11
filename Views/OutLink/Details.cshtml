@@ -1,0 +1,44 @@
+﻿@model TSBXG.Models.OutLink
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>OutLink</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Text)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Text)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Url)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Url)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IconMimeType)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IconMimeType)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DispalyIndex)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DispalyIndex)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

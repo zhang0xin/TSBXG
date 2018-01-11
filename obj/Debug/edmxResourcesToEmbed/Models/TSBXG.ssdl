@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TSBXG.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TSBXGStoreContainer">
+    <EntitySet Name="Document" EntityType="TSBXG.Store.Document" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OutLink" EntityType="TSBXG.Store.OutLink" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Permision" EntityType="TSBXG.Store.Permision" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sitemap" EntityType="TSBXG.Store.Sitemap" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="TSBXG.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="TSBXG.Store.User" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Document_Sitemap" Association="TSBXG.Store.FK_Document_Sitemap">
+      <End Role="Sitemap" EntitySet="Sitemap" />
+      <End Role="Document" EntitySet="Document" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permision_Sitemap" Association="TSBXG.Store.FK_Permision_Sitemap">
+      <End Role="Sitemap" EntitySet="Sitemap" />
+      <End Role="Permision" EntitySet="Permision" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permision_User" Association="TSBXG.Store.FK_Permision_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Permision" EntitySet="Permision" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="ImageData" Type="varbinary(max)" />
+    <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Html" Type="nvarchar(max)" />
+    <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+    <Property Name="AttachFile" Type="varbinary(max)" />
+    <Property Name="AttachFileName" Type="nvarchar" MaxLength="50" />
+    <Property Name="AttachFileType" Type="nvarchar" MaxLength="200" />
+    <Property Name="AttachFileUrl" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateTime" Type="datetime2" />
+    <Property Name="UpdateTime" Type="datetime2" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateIp" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdateIp" Type="nvarchar" MaxLength="50" />
+    <Property Name="Hits" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OutLink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Text" Type="nvarchar" MaxLength="50" />
+    <Property Name="Url" Type="nvarchar" MaxLength="300" />
+    <Property Name="Icon" Type="varbinary(max)" />
+    <Property Name="IconMimeType" Type="nvarchar" MaxLength="100" />
+    <Property Name="DispalyIndex" Type="numeric" Scale="9" />
+  </EntityType>
+  <EntityType Name="Permision">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="SitemapId" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Sitemap">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Text" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ManageUrl" Type="nvarchar" MaxLength="100" />
+    <Property Name="ViewUrl" Type="nvarchar" MaxLength="100" />
+    <Property Name="DisplayIndex" Type="numeric" Scale="9" />
+    <Property Name="ParentId" Type="nvarchar" MaxLength="50" />
+    <Property Name="ViewNeedPermission" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_Document_Sitemap">
+    <End Role="Sitemap" Type="TSBXG.Store.Sitemap" Multiplicity="0..1" />
+    <End Role="Document" Type="TSBXG.Store.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sitemap">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="Category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permision_Sitemap">
+    <End Role="Sitemap" Type="TSBXG.Store.Sitemap" Multiplicity="0..1" />
+    <End Role="Permision" Type="TSBXG.Store.Permision" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sitemap">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Permision">
+        <PropertyRef Name="SitemapId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permision_User">
+    <End Role="User" Type="TSBXG.Store.User" Multiplicity="0..1" />
+    <End Role="Permision" Type="TSBXG.Store.Permision" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Permision">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

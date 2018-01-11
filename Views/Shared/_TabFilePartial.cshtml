@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TSBXG.Models.Document>
+@{
+    ViewBag.Title = "_TabNewsPartial";
+}
+
+<ul class="nav nav-tabs">
+    @{
+        var active = MvcHtmlString.Create("class='active'");
+        var sitemaps = Model.Select(d => d.Sitemap).Distinct().OrderBy(s => s.DisplayIndex);
+        foreach (TSBXG.Models.Sitemap sitemap in sitemaps)
+        {
+        <li @active><a href="#tab-@sitemap.Id" data-toggle="tab">@sitemap.Text</a></li>
+            active = null;
+        }
+    }
+</ul>
+<div class="tab-content fixed-content-height">
+    @{
+        var activeClass = "active";
+        foreach (TSBXG.Models.Sitemap sitemap in sitemaps)
+        {
+            var docs = Model.Where(d => d.Category == sitemap.Id).ToArray();
+        <ul id="tab-@sitemap.Id" class="list-link tab-pane fade in fixed-content-height @activeClass">
+            @for (int i = 0; i < 6; i++)
+            {
+                var link = "";
+                var text = "";
+                if (i < docs.Count())
+                {
+                    link = string.Format(
+                        "/Document/ViewNewsContent/{0}?category={1}", @docs[i].Id, @docs[i].Category);
+                    text = docs[i].Title;
+                }
+
+
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                <li>
+                    @if (!string.IsNullOrWhiteSpace(docs[i].AttachFileType))
+                    {
+                        <a href="@Url.Action("FileById", "Document", new { docs[i].Id })">»&nbsp;&nbsp;@docs[i].Title<span>下载文件</span></a>
+                    }
+                    else if (!string.IsNullOrWhiteSpace(docs[i].AttachFileUrl))
+                    {
+                        <a href="@docs[i].AttachFileUrl">»&nbsp;&nbsp;@docs[i].Title<span>下载文件</span></a>
+
+                    }
+                </li>
+                }
+                else
+                {
+                <li><a>&nbsp;</a></li>
+                }
+            }
+            <li><a class="more" href="/Document/ViewFileList?category=@sitemap.Id">查看更多&nbsp;&nbsp;»</a></li>
+        </ul>
+            activeClass = null;
+        }
+    }
+</div>

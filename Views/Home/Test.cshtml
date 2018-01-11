@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body>
+    @using (Html.BeginForm("Test", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    { 
+        <input id="ImageData" type="file" name="ImageData" />
+        <input type="submit" value="上传"/>
+    }
+</body>
+</html>

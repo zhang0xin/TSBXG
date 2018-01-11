@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>河钢唐钢不锈钢公司</title>
+    <!--[if lt IE 11]>
+      <script src="/Scripts/html5shiv.js"></script>
+      <script src="/Scripts/respond.js"></script>
+    <![endif]-->
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content/summernote")
+    @Styles.Render("~/Content/bootstrap")
+
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/pdfobject")
+    @Scripts.Render("~/Scripts/bootstrap")
+    @Scripts.Render("~/Scripts/summernote")
+</head>
+<body id="bxg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="logo">
+                    <div id="currtime"></div>
+                    <script type="text/javascript">
+                        function num(num) {
+                            return num >= 10 ? num : '0' + num;
+                        }
+                        function getCurrTime() {
+                            var d = new Date();
+                            var str = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + '&nbsp;&nbsp;';
+                            var arr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+                            str += arr[d.getDay()] + '&nbsp;&nbsp;';
+                            str += num(d.getHours()) + ':' + num(d.getMinutes()) + ':' + num(d.getSeconds());
+                            return str;
+                        }
+                        document.getElementById('currtime').innerHTML = getCurrTime();
+                        setInterval(function () { document.getElementById('currtime').innerHTML = getCurrTime(); }, 1000);
+                    </script>
+                    <img src="@Url.Action("ImageByCategory", "Document", new { category = "hengfubiaoyu" })" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @{Html.RenderAction("_HomeMenuPartial", "Home");}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="carousel">
+                    @RenderSection("featured", required: false)
+                </div>
+            </div>
+        </div>
+
+        @RenderBody()
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="footer">
+                    <p>Copyright © 2017 河钢唐钢不锈钢公司 All Rights Reserved</p>
+                    <p>公司电话：0315-3768801   0315-3768001</p>
+                    <p>传真：0315-3768802</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

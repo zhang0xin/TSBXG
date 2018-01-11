@@ -1,0 +1,55 @@
+﻿@helper RenderMenu(TSBXG.Models.TreeNode<TSBXG.Models.Sitemap> root)
+{
+    <text>[</text>
+        for (int i = 0; i < root.Children.Count(); i++)
+        {
+            @RenderItem(root.Children[i], true)
+            if (i < root.Children.Count() - 1) 
+            {
+                <text>,</text>
+            }
+        }
+    <text>]</text>
+}
+@helper RenderItem(TSBXG.Models.TreeNode<TSBXG.Models.Sitemap> node, bool renderChildren)
+{
+    bool hasChildren = renderChildren && node.Children.Count() > 0;
+    
+    <text>{text: '@node.Value.Text', href: '@node.Value.ManageUrl' </text>
+    if (hasChildren)
+    {
+            <text>, nodes: [</text>
+        for (int i = 0; i < node.Children.Count(); i++)
+        {
+                    @RenderItem(node.Children[i], renderChildren)
+            if (i < node.Children.Count() - 1)
+            {
+                        <text>,</text>
+            }
+        }
+            <text>]</text>
+    }
+    <text>}</text>
+}
+
+
+@{
+    var currUserId = 1;
+    var currUser = (TSBXG.Models.User)Session["CurrentUser"];
+    if (currUser != null)
+    {
+        currUserId = currUser.Id;
+    }
+}
+<div id="tree-menu"></div>
+<script type="text/javascript">
+    $(function () {
+        var menuData = @RenderMenu(TSBXG.Models.SitemapManager.GetManageSitemapTree(currUserId))
+
+        $('#tree-menu').treeview({
+            levels: 2,
+            enableLinks: true,
+            data: menuData
+        });
+    });
+</script>

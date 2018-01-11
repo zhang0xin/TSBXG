@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "主页";
+}
+@using TSBXG.Models;
+@section featured {
+    @{
+        Html.RenderAction("_CarouselPartial", "Home", new { category = "lunxiantupian", taged = false, withLink = false });
+    }
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="set">
+            <h3><a href="#">图片新闻</a></h3>
+            @{Html.RenderAction("_CarouselPartial", "Home", new { category = "tupianxinwen" });}
+        </div>
+    </div>
+    <div class="col-md-6">
+        @{Html.RenderAction("_TabNewsPartial", "Home", new { category = "xinwen" });}
+    </div>
+
+    <div class="col-md-3">
+        @{
+            Html.RenderAction("_TabContentPartial", "Home", new
+            {
+                tabs = new TabContent[]{
+                        new TabContent(){Type="News", Category="gonggaolan", ItemWithDate=true, ItemWithTime=false},
+                        new TabContent(){Type="News", Category="shengchanxinxi", ItemWithDate=true, ItemWithTime=false}
+                    }
+            });
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="set">
+            <h3><a href="#">常用链接</a></h3>
+
+            @{Html.RenderAction("_TabLinks", "OutLink");}
+        </div>
+    </div>
+    <div class="col-md-6">
+        @{
+            Html.RenderAction("_TabContentPartial", "Home", new
+            {
+                tabs = new TabContent[]{
+                        new TabContent(){Type="News", Category="tixiguanli", ItemWithDate=true, ItemWithTime=true},
+                        new TabContent(){Type="News", Category="zuoyezhangzhi", ItemWithDate=true, ItemWithTime=true},
+                        new TabContent(){Type="News", Category="jixiaoguanli", ItemWithDate=true, ItemWithTime=true},
+                        new TabContent(){Type="News", Category="jingyishengchan", ItemWithDate=true, ItemWithTime=true},
+                        new TabContent(){Type="File", Category="wenjianxiazai"}
+                    }
+            });
+        }
+    </div>
+    <div class="col-md-3">
+        @{
+            Html.RenderAction("_TabContentPartial", "Home", new
+            {
+                tabs = new TabContent[]{
+                        new TabContent(){Type="Image", Category="qiyerongyu", ItemWithLink=true},
+                        new TabContent(){Type="Image", Category="zhigongfengcai", ItemWithLink=true}
+                    }
+            });
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="set">
+            <h3><a href="#">产品展示</a></h3>
+            @{
+                Html.RenderAction("_ProductShowPartial", "Home");
+            }
+        </div>
+    </div>
+</div>

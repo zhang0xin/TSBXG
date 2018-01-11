@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<TSBXG.Models.Document>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+
+}
+<div class="panel panel-default">
+    <div class="panel-heading">@ViewBag.Sitemap.Text 列表</div>
+
+    <div class="panel-body">
+        @using (Html.BeginForm("ListFile", "Document", FormMethod.Get, new { @class = "form-inline" }))
+        {                                              
+            <input type="hidden" name="category" value='@Request["category"]' />
+            <input id="qeryTitle" name="queryTitle" class="form-control" placeholder="标题" type="text" value="@ViewBag.QueryTitle">
+
+            <div class="btn-group">
+                <input type="submit" class="btn btn-default" value="查询">
+                @Html.ActionLink("全部", "ListFile", new { category = Request["category"] }, new { @class = "btn btn-default" })
+            </div>
+            @Html.ActionLink("创建", "CreateFile", new { category = Request["category"] }, new { @class = "btn btn-default" })
+        }
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().AttachFileType)
+            </th>
+            <th>File</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttachFileType)
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="@Url.Action("DownloadFile", "Document", 
+                        new { item.Id, category=item.Category, page=Request["page"] })">
+                        <span class="glyphicon glyphicon-file"></span>下载文件
+                    </a>
+                </td>
+
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("修改", "EditFile", new { id = item.Id, category = Request["category"] }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("删除", "DeleteFile", new { id = item.Id, category = Request["category"] }, new { @class = "btn btn-default" })
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+    <div class="panel-footer">
+        @Html.PagedListPager(Model, page => Url.Action("ListFile", new { page, category = Request["category"], queryTitle = ViewBag.QueryTitle }))
+    </div>
+</div>

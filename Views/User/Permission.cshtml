@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TSBXG.Models.PermissionData>
+
+@{
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">修改<b>@ViewBag.User.UserName</b>用户权限：</div>
+
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(item => item.SitemapId)
+                </th> 
+                <th>
+                    @Html.DisplayNameFor(item => item.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(item => item.Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(item => item.Access)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SitemapId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="checkbox" name="access" @(item.Access ? "checked" : "") value="@item.Category:@item.SitemapId" />允许访问</label>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div class="panel-footer">
+            <input type="submit" class="btn btn-primary" value="保存" />
+            @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}

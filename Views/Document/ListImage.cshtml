@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TSBXG.Models.Document>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">图像列表</div>
+
+    <div class="panel-body">
+        @Html.ActionLink("创建图像", "CreateImage", new { category = Request["category"] }, new { @class = "btn btn-default" })
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageData)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.ImageData != null)
+                    {
+                        <img class="list-thumb-image" src="@Url.Action("ImageById", "Document", new { item.Id })" />
+                    }
+                </td>
+
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("修改", "EditImage", new { id = item.Id, category = Request["category"] }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("删除", "DeleteImage", new { id = item.Id, category = Request["category"] }, new { @class = "btn btn-default" })
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5c497f49a1684973bf8c4503d09c5be6" Name="关系图1" ZoomLevel="83" >
+        <EntityTypeShape EntityType="TSBXG.OutLink" Width="1.5" PointX="11.375" PointY="13.625" />
+        <EntityTypeShape EntityType="TSBXG.sysdiagrams" Width="1.5" PointX="3.375" PointY="14.875" />
+        <EntityTypeShape EntityType="TSBXG.User" Width="1.5" PointX="4.125" PointY="11" />
+        <EntityTypeShape EntityType="TSBXG.Sitemap" Width="1.5" PointX="6.25" PointY="11.25" />
+        <EntityTypeShape EntityType="TSBXG.Permision" Width="1.5" PointX="6" PointY="14.75" />
+        <AssociationConnector Association="TSBXG.FK_Permision_Sitemap" />
+        <AssociationConnector Association="TSBXG.FK_Permision_User" />
+        <EntityTypeShape EntityType="TSBXG.Document" Width="1.5" PointX="9" PointY="9.75" />
+        <AssociationConnector Association="TSBXG.FK_Document_Sitemap" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

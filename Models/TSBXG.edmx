@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TSBXG.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TSBXGStoreContainer">
+          <EntitySet Name="Document" EntityType="TSBXG.Store.Document" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OutLink" EntityType="TSBXG.Store.OutLink" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Permision" EntityType="TSBXG.Store.Permision" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sitemap" EntityType="TSBXG.Store.Sitemap" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="TSBXG.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="TSBXG.Store.User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Document_Sitemap" Association="TSBXG.Store.FK_Document_Sitemap">
+            <End Role="Sitemap" EntitySet="Sitemap" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permision_Sitemap" Association="TSBXG.Store.FK_Permision_Sitemap">
+            <End Role="Sitemap" EntitySet="Sitemap" />
+            <End Role="Permision" EntitySet="Permision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permision_User" Association="TSBXG.Store.FK_Permision_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Permision" EntitySet="Permision" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Html" Type="nvarchar(max)" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+          <Property Name="AttachFile" Type="varbinary(max)" />
+          <Property Name="AttachFileName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AttachFileType" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFileUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime2" />
+          <Property Name="UpdateTime" Type="datetime2" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateIp" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateIp" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hits" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutLink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="nvarchar" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" MaxLength="300" />
+          <Property Name="Icon" Type="varbinary(max)" />
+          <Property Name="IconMimeType" Type="nvarchar" MaxLength="100" />
+          <Property Name="DispalyIndex" Type="numeric" Scale="9" />
+        </EntityType>
+        <EntityType Name="Permision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="SitemapId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Text" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ManageUrl" Type="nvarchar" MaxLength="100" />
+          <Property Name="ViewUrl" Type="nvarchar" MaxLength="100" />
+          <Property Name="DisplayIndex" Type="numeric" Scale="9" />
+          <Property Name="ParentId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ViewNeedPermission" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Document_Sitemap">
+          <End Role="Sitemap" Type="TSBXG.Store.Sitemap" Multiplicity="0..1" />
+          <End Role="Document" Type="TSBXG.Store.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sitemap">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permision_Sitemap">
+          <End Role="Sitemap" Type="TSBXG.Store.Sitemap" Multiplicity="0..1" />
+          <End Role="Permision" Type="TSBXG.Store.Permision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sitemap">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permision">
+              <PropertyRef Name="SitemapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permision_User">
+          <End Role="User" Type="TSBXG.Store.User" Multiplicity="0..1" />
+          <End Role="Permision" Type="TSBXG.Store.Permision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permision">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TSBXG" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TSBXGContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OutLink" EntityType="TSBXG.OutLink" />
+          <EntitySet Name="sysdiagrams" EntityType="TSBXG.sysdiagrams" />
+          <EntitySet Name="User" EntityType="TSBXG.User" />
+          <EntitySet Name="Sitemap" EntityType="TSBXG.Sitemap" />
+          <EntitySet Name="Permision" EntityType="TSBXG.Permision" />
+          <AssociationSet Name="FK_Permision_Sitemap" Association="TSBXG.FK_Permision_Sitemap">
+            <End Role="Sitemap" EntitySet="Sitemap" />
+            <End Role="Permision" EntitySet="Permision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permision_User" Association="TSBXG.FK_Permision_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Permision" EntitySet="Permision" />
+          </AssociationSet>
+          <EntitySet Name="Document" EntityType="TSBXG.Document" />
+          <AssociationSet Name="FK_Document_Sitemap" Association="TSBXG.FK_Document_Sitemap">
+            <End Role="Sitemap" EntitySet="Sitemap" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="OutLink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Text" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Url" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="Icon" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="IconMimeType" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="DispalyIndex" Precision="18" Scale="9" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FullName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permision" Relationship="TSBXG.FK_Permision_User" FromRole="User" ToRole="Permision" />
+        </EntityType>
+        <EntityType Name="Sitemap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ManageUrl" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ViewUrl" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="DisplayIndex" Precision="18" Scale="9" />
+          <Property Type="String" Name="ParentId" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ViewNeedPermission" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permision" Relationship="TSBXG.FK_Permision_Sitemap" FromRole="Sitemap" ToRole="Permision" />
+          <NavigationProperty Name="Document" Relationship="TSBXG.FK_Document_Sitemap" FromRole="Sitemap" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Permision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserId" />
+          <Property Type="String" Name="SitemapId" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tag" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sitemap" Relationship="TSBXG.FK_Permision_Sitemap" FromRole="Permision" ToRole="Sitemap" />
+          <NavigationProperty Name="User" Relationship="TSBXG.FK_Permision_User" FromRole="Permision" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Permision_Sitemap">
+          <End Type="TSBXG.Sitemap" Role="Sitemap" Multiplicity="0..1" />
+          <End Type="TSBXG.Permision" Role="Permision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sitemap">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permision">
+              <PropertyRef Name="SitemapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permision_User">
+          <End Type="TSBXG.User" Role="User" Multiplicity="0..1" />
+          <End Type="TSBXG.Permision" Role="Permision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permision">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Category" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="ImageData" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="ImageMimeType" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Html" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tag" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="AttachFile" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="AttachFileName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AttachFileType" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AttachFileUrl" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateTime" Precision="7" />
+          <Property Type="DateTime" Name="UpdateTime" Precision="7" />
+          <Property Type="String" Name="CreateUser" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UpdateUser" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CreateIp" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UpdateIp" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Hits" Nullable="false" />
+          <NavigationProperty Name="Sitemap" Relationship="TSBXG.FK_Document_Sitemap" FromRole="Document" ToRole="Sitemap" />
+        </EntityType>
+        <Association Name="FK_Document_Sitemap">
+          <End Type="TSBXG.Sitemap" Role="Sitemap" Multiplicity="0..1" />
+          <End Type="TSBXG.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sitemap">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TSBXGStoreContainer" CdmEntityContainer="TSBXGContainer">
+          <EntitySetMapping Name="OutLink">
+            <EntityTypeMapping TypeName="TSBXG.OutLink">
+              <MappingFragment StoreEntitySet="OutLink">
+                <ScalarProperty Name="DispalyIndex" ColumnName="DispalyIndex" />
+                <ScalarProperty Name="IconMimeType" ColumnName="IconMimeType" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TSBXG.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="TSBXG.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sitemap">
+            <EntityTypeMapping TypeName="TSBXG.Sitemap">
+              <MappingFragment StoreEntitySet="Sitemap">
+                <ScalarProperty Name="ViewNeedPermission" ColumnName="ViewNeedPermission" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="DisplayIndex" ColumnName="DisplayIndex" />
+                <ScalarProperty Name="ViewUrl" ColumnName="ViewUrl" />
+                <ScalarProperty Name="ManageUrl" ColumnName="ManageUrl" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permision">
+            <EntityTypeMapping TypeName="TSBXG.Permision">
+              <MappingFragment StoreEntitySet="Permision">
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="SitemapId" ColumnName="SitemapId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document">
+            <EntityTypeMapping TypeName="TSBXG.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="Hits" ColumnName="Hits" />
+                <ScalarProperty Name="UpdateIp" ColumnName="UpdateIp" />
+                <ScalarProperty Name="CreateIp" ColumnName="CreateIp" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="AttachFileUrl" ColumnName="AttachFileUrl" />
+                <ScalarProperty Name="AttachFileType" ColumnName="AttachFileType" />
+                <ScalarProperty Name="AttachFileName" ColumnName="AttachFileName" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Html" ColumnName="Html" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

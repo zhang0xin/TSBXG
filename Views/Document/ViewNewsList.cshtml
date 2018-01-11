@@ -1,0 +1,33 @@
+﻿@model PagedList.IPagedList<TSBXG.Models.Document>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ViewNews";
+    Layout = "~/Views/Shared/_HomeContentLayout.cshtml";
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>标题</th>
+            <th>作者</th>
+            <th>日期</th>
+            <th>查看</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Math.Min(20, Model.Count()); i++)
+        { 
+            <tr>
+                <td><a href='~/Document/ViewNewsContent/@Model[i].Id?category=@Model[i].Category&page=@Request["page"]'>@Model[i].Title</a></td>
+                <td>@Model[i].UpdateUser</td>
+                <td>@Model[i].UpdateTime</td>
+                <td>@Model[i].Hits</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Request["requireLogon"] == "True")
+{   
+    @Html.Partial("_PopLogonPartial");
+}
+@Html.PagedListPager(Model, page => Url.Action("ViewNewsList", new { page, category = Request["category"] }))
+

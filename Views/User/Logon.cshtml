@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>河钢唐钢不锈钢公司后台管理</title>
+    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content/summernote")
+    @Styles.Render("~/Content/bootstrap")
+
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/bootstrap")
+    @Scripts.Render("~/Scripts/summernote")
+</head>
+<body>
+    <div id="logon" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">用户登录</h3>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Logon", "User", FormMethod.Post, new { @class="form-horizontal"}))
+            {
+                <div class="control-group">
+                    <label class="control-label" for="username">用户名</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="username">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">密码</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password">
+                    </div>
+                </div>
+                @Html.ValidationMessage("allMessage");
+                <br />
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">登录</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
